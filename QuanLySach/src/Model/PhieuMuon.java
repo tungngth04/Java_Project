@@ -6,16 +6,9 @@ package Model;
 
 import java.util.Objects;
 
-/**
- *
- * @author Administrator
- */
 public class PhieuMuon {
     private String maPM;
     private String maND;
-    private String maSach;
-    private String tenSach;
-    private String tgMuon;
     public PhieuMuon(){
         
     }
@@ -24,12 +17,9 @@ public class PhieuMuon {
         this.maPM = maPM;
     }
 
-    public PhieuMuon(String maPM, String maND, String maSach, String tenSach, String tgMuon) {
+    public PhieuMuon(String maPM, String maND) {
         this.maPM = maPM;
         this.maND = maND;
-        this.maSach = maSach;
-        this.tenSach = tenSach;
-        this.tgMuon = tgMuon;
     }
 
     public String getMaPM() {
@@ -47,33 +37,10 @@ public class PhieuMuon {
     public void setMaND(String maND) {
         this.maND = maND;
     }
-
-    public String getMaSach() {
-        return maSach;
-    }
-
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
-    }
-
-    public String getTenSach() {
-        return tenSach;
-    }
-
-    public void setTenSach(String tenSach) {
-        this.tenSach = tenSach;
-    }
-
-    public String getTgMuon() {
-        return tgMuon;
-    }
-
-    public void setTgMuon(String tgMuon) {
-        this.tgMuon = tgMuon;
-    }
     @Override
     public String toString() {
-        return  maPM+","+ maND+ "," + maSach +","+ tenSach +","+ tgMuon;
+        return  maPM+","+ maND;
+        //+ "," + maSach +","+ tenSach +","+ tgMuon + "," + soLuong
     }
     @Override
     public boolean equals(Object obj) {
