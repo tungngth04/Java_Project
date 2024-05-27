@@ -26,13 +26,14 @@ public class bookManager extends javax.swing.JFrame {
     public void view() {
         File1 f1 = new File1();
         List<Sach1> list = f1.docFile();
-        Sach1 x = list.get(pos);
-        this.txtMS.setText(x.getMaSach());
-        this.txtTS.setText(x.getTenSach());
-        this.txtTL.setText(x.getTheLoai());
-        this.txtNXB.setText(x.getNhaXb());
-        
-       
+        if (list.size() > 0) {
+            Sach1 x = list.get(pos);
+            this.txtMS.setText(x.getMaSach());
+            this.txtTS.setText(x.getTenSach());
+            this.txtTL.setText(x.getTheLoai());
+            this.txtNXB.setText(x.getNhaXb());
+            this.txtSL.setText(String.valueOf(x.getSoLuong()));
+        }
     }
 
     public void loadDataToTable() {
@@ -43,13 +44,12 @@ public class bookManager extends javax.swing.JFrame {
             tblModel.setRowCount(0);
             for (Sach1 pm : list) {
                 tblModel.addRow(new Object[]{
-                    pm.getMaSach(), pm.getTenSach(), pm.getTheLoai(), pm.getNhaXb()
+                    pm.getMaSach(), pm.getTenSach(), pm.getTheLoai(), pm.getNhaXb(), pm.getSoLuong()
                 });
             }
             tblModel.fireTableDataChanged();
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
@@ -87,6 +87,8 @@ public class bookManager extends javax.swing.JFrame {
         txtTL = new javax.swing.JTextField();
         txtNXB = new javax.swing.JTextField();
         txtTS = new javax.swing.JTextField();
+        txtSL = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -241,10 +243,10 @@ public class bookManager extends javax.swing.JFrame {
 
         tblPhieuMuon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Sách", "Tên Sách", "Thể Loại", "Nhà Xuất Bản"
+                "Mã Sách", "Tên Sách", "Thể Loại", "Nhà xuất bản", "Số lượng"
             }
         ));
         tblPhieuMuon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -281,39 +283,45 @@ public class bookManager extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tên sách");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 89, 20));
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 89, 20));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Mã sách");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 70, -1));
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 70, -1));
 
         theLoai.setBackground(new java.awt.Color(0, 51, 204));
         theLoai.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         theLoai.setForeground(new java.awt.Color(255, 255, 255));
         theLoai.setText("Thể loại");
-        jPanel4.add(theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 70, -1));
+        jPanel4.add(theLoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 70, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nhà xuất bản");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, -1, -1));
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, -1, -1));
 
         txtMS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMSActionPerformed(evt);
             }
         });
-        jPanel4.add(txtMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 380, 30));
-        jPanel4.add(txtTL, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 380, 30));
+        jPanel4.add(txtMS, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 380, 30));
+        jPanel4.add(txtTL, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 380, 30));
 
         txtNXB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNXBActionPerformed(evt);
             }
         });
-        jPanel4.add(txtNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 380, 30));
-        jPanel4.add(txtTS, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 380, 30));
+        jPanel4.add(txtNXB, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, 380, 30));
+        jPanel4.add(txtTS, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 380, 30));
+        jPanel4.add(txtSL, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 380, 30));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Số lượng");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 90, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 840, 240));
 
@@ -339,76 +347,77 @@ public class bookManager extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMSActionPerformed
 
     private void HuyboMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HuyboMouseClicked
-        view();
+        loadDataToTable();
     }//GEN-LAST:event_HuyboMouseClicked
 
     private void SaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveMouseClicked
-        String maPM = txtNXB.getText();
-        String maND = txtTL.getText();
-        String maMS = txtMS.getText();
+        String NXB = txtNXB.getText();
+        String TL = txtTL.getText();
+        String maSach = txtMS.getText();
         String tenSach = txtTS.getText();
+        String slText = txtSL.getText();
+        StringBuilder sb = new StringBuilder();
 
-        StringBuilder sb = new StringBuilder();  // cho phép tạo ra 1 chuỗi rỗng và bổ sung nội dung Username is empty or Password is empty vào sb
-        if (maPM.trim().equals("")) {
+
+        if (maSach.trim().isEmpty()) {
             sb.append("Mã sách không được để trống\n");
         }
-        if (maND.trim().equals("")) {
-            sb.append("Mã người đọc không được để trống\n");
-        }
-        if (maMS.trim().equals("")) {
-            sb.append("Mã sách không được để trống\n");
-        }
-        if (tenSach.trim().equals("")) {
+        if (tenSach.trim().isEmpty()) {
             sb.append("Tên sách không được để trống\n");
         }
+        if (TL.trim().isEmpty()) {
+            sb.append("Thể loại không được để trống\n");
+        }
+        if (NXB.trim().isEmpty()) {
+            sb.append("Nhà xuất bản không được để trống\n");
+        }
+        int SL = 0;
+        if (slText.trim().isEmpty()) {
+            sb.append("Số lượng không được để trống\n");
+        } else {
+            try {
+                SL = Integer.parseInt(slText);
+                if (SL <= 0) {
+                    sb.append("Số lượng phải lớn hơn 0\n");
+                }
+            } catch (NumberFormatException e) {
+                sb.append("Số lượng phải là một số hợp lệ\n");
+            }
+        }
+
 
         if (sb.length() > 0) {
-            JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, sb.toString(), "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
-
-        } else {
-            if (check == 1) {
-                try {
-                    File1 pml = new File1();
-                    List<Sach1> list = new ArrayList<>();
-                    Sach1 pm = new Sach1(txtMS.getText(), txtTS.getText(), txtNXB.getText(), txtTL.getText());
-                    list.add(pm);
-                    pml.luuFile(list, true);
-                    JOptionPane.showMessageDialog(this, "Thông tin sách vừa nhập đã được lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    loadDataToTable();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.ERROR_MESSAGE);
-
-                }
-            }
-            if (check == -1){
-                try {
-                    File1 pml = new File1();
-                    List<Sach1> list = pml.docFile();
-                    Sach1 newPM = new Sach1(txtMS.getText(), txtTS.getText(), txtNXB.getText(), txtTL.getText());
-                    Sach1 pm = new Sach1(txtNXB.getText());
-                    if (list.contains(pm)) {
-                        list.set(pos, newPM);
-                        JOptionPane.showMessageDialog(this, "Thông tin sách vừa chọn đã được sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Thông tin sách vừa chọn chưa được sửa", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                    }
-                    pml.luuFile(list, false);
-                    loadDataToTable();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.INFORMATION_MESSAGE);
-
-                }
-            }
-
         }
+        Sach1 newBook = new Sach1(maSach, tenSach, TL, NXB, SL);
+        File1 f1 = new File1();
+        List<Sach1> list = f1.docFile();
+        if (check == 1) {
+         
+            list.add(newBook);
+            JOptionPane.showMessageDialog(this, "Thông tin sách vừa nhập đã được lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else if (check == -1) {
+            // Cập nhật
+            boolean found = false;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getMaSach().equals(maSach)) {
+                    list.set(i, newBook);
+                    found = true;
+                    JOptionPane.showMessageDialog(this, "Thông tin sách vừa chọn đã được sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                }
+            }
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy sách với mã: " + maSach, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        f1.luuFile(list, false);
+        loadDataToTable();
     }//GEN-LAST:event_SaveMouseClicked
 
     private void DeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteMouseClicked
-        StringBuilder sb = new StringBuilder();
         try {
             File1 f1 = new File1();
             List<Sach1> list = f1.docFile();
@@ -432,72 +441,46 @@ public class bookManager extends javax.swing.JFrame {
         this.txtTL.setText("");
         this.txtMS.setText("");
         this.txtTS.setText("");
-
+        this.txtSL.setText("");
         check = 1;
     }//GEN-LAST:event_addMouseClicked
 
     private void HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeMouseClicked
-        TrangChu dt1 = new TrangChu();
+        TrangChu1 dt1 = new TrangChu1();
         dt1.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HomeMouseClicked
 
     private void SearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SearchMouseClicked
-       String maSach = txtMS.getText().trim();
-    if (maSach.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sách để tìm kiếm", "Thông báo", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    File1 f1 = new File1();
-    List<Sach1> list = f1.docFile();
-    boolean found = false;
-    for (Sach1 x : list) {
-        if (x.getMaSach().equals(maSach)) {
-            DefaultTableModel tblModel = (DefaultTableModel) tblPhieuMuon.getModel();
-            tblModel.setRowCount(0); 
-            tblModel.addRow(new Object[]{
-                x.getMaSach(), x.getTenSach(), x.getTheLoai(), x.getNhaXb()
-            });
-            tblModel.fireTableDataChanged();
-            found = true;
-            break;
+        String maSach = txtMS.getText().trim();
+        if (maSach.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sách để tìm kiếm", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    }
 
-    if (!found) {
-        JOptionPane.showMessageDialog(this, "Không tìm thấy sách với mã sách đã nhập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-    }
+        File1 f1 = new File1();
+        List<Sach1> list = f1.docFile();
+        boolean found = false;
+        DefaultTableModel tblModel = (DefaultTableModel) tblPhieuMuon.getModel();
+        tblModel.setRowCount(0);
+        for (Sach1 x : list) {
+            if (x.getMaSach().equals(maSach)) {
+                tblModel.addRow(new Object[]{
+                    x.getMaSach(), x.getTenSach(), x.getTheLoai(), x.getNhaXb(), x.getSoLuong()
+                });
+                found = true;
+                break;
+            }
+        }
+
+        tblModel.fireTableDataChanged();
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy sách với mã sách đã nhập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_SearchMouseClicked
 
-
-
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+    
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TrangChu().setVisible(true);
@@ -520,6 +503,7 @@ public class bookManager extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
@@ -535,6 +519,7 @@ public class bookManager extends javax.swing.JFrame {
     private javax.swing.JLabel theLoai;
     private javax.swing.JTextField txtMS;
     private javax.swing.JTextField txtNXB;
+    private javax.swing.JTextField txtSL;
     private javax.swing.JTextField txtTL;
     private javax.swing.JTextField txtTS;
     // End of variables declaration//GEN-END:variables

@@ -8,7 +8,7 @@ public class Sach1 {
     private String tenSach;
     private String theLoai;
     private String nhaXb;
-
+    private int soLuong;
     // Constructors
     public Sach1() {
     }
@@ -17,14 +17,14 @@ public class Sach1 {
         this.maSach = maSach;
     }
 
-    public Sach1(String maSach, String tenSach, String theLoai, String nhaXb) {
+    public Sach1(String maSach, String tenSach, String theLoai, String nhaXb, int soLuong) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.theLoai = theLoai;
         this.nhaXb = nhaXb;
+        this.soLuong = soLuong;
     }
 
-    // Getter và Setter
     public String getMaSach() {
         return maSach;
     }
@@ -57,11 +57,19 @@ public class Sach1 {
         this.nhaXb = nhaXb;
     }
 
-    // Phương thức toString() để hiển thị thông tin sách
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
     @Override
     public String toString() {
-        return maSach + "," + tenSach + "," + theLoai + "," + nhaXb;
+        return maSach+","+tenSach+","+theLoai+","+nhaXb+","+soLuong;
     }
+    
 
     // Phương thức equals() để so sánh hai đối tượng sách dựa trên mã sách
     @Override

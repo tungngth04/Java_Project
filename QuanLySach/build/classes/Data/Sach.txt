@@ -1,3 +1,2 @@
-s01,Lập Trình hướng đối tượng, Sách giáo khoa, Bộ GD-DT
-s04,Pháp luật đại cương, Sách bài tập, Bộ GD-DT
-s02,Sách bài tập,Kim Đồng,Giải Tích
+1,6,6,6,6
+2,hh2,hhh,hh,1000

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Until;
 
 import Model.Sach1;
@@ -9,47 +5,48 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Administrator
- */
 public class File1 {
-     public void luuFile(List<Sach1> list,boolean  t) {
-        try {
-            FileWriter fw =new FileWriter("src/Data/Sach.txt",t);
-            BufferedWriter bw=new BufferedWriter(fw);
+    public void luuFile(List<Sach1> list, boolean append) {
+        try (FileWriter fw = new FileWriter("src/Data/Sach.txt", append);
+             BufferedWriter bw = new BufferedWriter(fw)) {
             for (Sach1 pm : list) {
                 bw.write(pm.toString());
                 bw.newLine();
             }
-            bw.close();
-            fw.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public List<Sach1> docFile(){
-        try {
-            List<Sach1> list=new ArrayList<>();
-            FileReader fr=new FileReader("src/Data/Sach.txt");
-            BufferedReader br=new BufferedReader(fr);
-            String line="";
-            while(true){
-                line=br.readLine();
-                if(line==null){
-                    break;
+
+    public List<Sach1> docFile() {
+        List<Sach1> list = new ArrayList<>();
+        try (FileReader fr = new FileReader("src/Data/Sach.txt");
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] txt = line.split(",");
+                if (txt.length == 5) { 
+                    try {
+                        String maSach = txt[0];
+                        String tenSach = txt[1];
+                        String theLoai = txt[2];
+                        String nhaXb = txt[3];
+                        int soLuong = Integer.parseInt(txt[4]);
+                        list.add(new Sach1(maSach, tenSach, theLoai, nhaXb, soLuong));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Lỗi định dạng số lượng: " + txt[4]);
+                    }
+                } else {
+                    System.err.println("Dòng không hợp lệ: " + line);
                 }
-                String txt[]=line.split(",");
-                list.add(new Sach1(txt[0],txt[1] , txt[2], txt[3]));
             }
-            return list;
-            
-        } catch (Exception e) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;
+        return list;
     }
-    
 }
