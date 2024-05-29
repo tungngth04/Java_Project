@@ -14,9 +14,9 @@ import java.util.List;
  * @author Admin
  */
 public class PhieuTraTXT {
-    public void filewrite(List<PhieuTra> list){
+    public void filewrite(List<PhieuTra> list, boolean t){
         try{
-            FileWriter fw = new FileWriter("phieumuon.txt");
+            FileWriter fw = new FileWriter("phieumuon.txt",t);
             BufferedWriter bw = new BufferedWriter(fw);
             for(PhieuTra pt : list){
                 bw.write(pt.toString());
@@ -31,7 +31,7 @@ public class PhieuTraTXT {
     public List<PhieuTra> fileread(){
         try{
             List<PhieuTra> list = new ArrayList<>();
-            FileReader fr = new FileReader("phieumuon.txt");
+            FileReader fr = new FileReader("phieutra.txt");
             BufferedReader br = new BufferedReader(fr);
             String line="";
             while(true){
@@ -47,6 +47,5 @@ public class PhieuTraTXT {
         }
         return null;
     }
-    
-    
 }
+    

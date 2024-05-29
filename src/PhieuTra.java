@@ -16,6 +16,7 @@ public class PhieuTra {
     private String manguoidoc;
     private String tensach;
     private String thoigiantra;
+    private int soluong;
 
     public PhieuTra() {
     }
@@ -26,6 +27,7 @@ public class PhieuTra {
         this.manguoidoc = manguoidoc;
         this.tensach=tensach;
         this.thoigiantra = thoigiantra;
+        this.soluong= soluong;
     }
 
     public String getMaphieutra() {
@@ -69,10 +71,25 @@ public class PhieuTra {
         this.thoigiantra = thoigiantra;
     }
 
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
+
     @Override
     public String toString() {
-        return "Phieu Tra : {" + "maphieutra=" + maphieutra + ", masach=" + masach + ", manguoidoc=" + manguoidoc + ", tensach=" + tensach + ", thoigiantra=" + thoigiantra + '}';
+        return "PhieuTra{" + "maphieutra=" + maphieutra + ", masach=" + masach + ", manguoidoc=" + manguoidoc + ", tensach=" + tensach + ", thoigiantra=" + thoigiantra + ", soluong=" + soluong + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -85,7 +102,7 @@ public class PhieuTra {
             return false;
         }
         final PhieuTra other = (PhieuTra) obj;
-        if (this.thoigiantra != other.thoigiantra) {
+        if (this.soluong != other.soluong) {
             return false;
         }
         if (!Objects.equals(this.maphieutra, other.maphieutra)) {
@@ -97,8 +114,15 @@ public class PhieuTra {
         if (!Objects.equals(this.manguoidoc, other.manguoidoc)) {
             return false;
         }
-        return Objects.equals(this.tensach, other.tensach);
+        if (!Objects.equals(this.tensach, other.tensach)) {
+            return false;
+        }
+        return Objects.equals(this.thoigiantra, other.thoigiantra);
     }
+    
+
+   
+    
     
 
     
