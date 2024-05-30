@@ -1,0 +1,2 @@
+Phieu Tra : {maphieutra=MP01, masach=MS01, manguoidoc=MN01, tensach=1/1/2002, thoigiantra=S1}
+Phieu Tra : {maphieutra=MP02, masach=MS02, manguoidoc=MN02, tensach=2/2/2002, thoigiantra=S2}

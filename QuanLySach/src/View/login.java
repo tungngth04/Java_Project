@@ -60,7 +60,7 @@ public class login extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 390));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(101, 12, 146));
 
         lbexit.setBackground(new java.awt.Color(255, 255, 255));
         lbexit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -208,7 +208,7 @@ public class login extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 390, 390));
 
-        setSize(new java.awt.Dimension(810, 391));
+        setSize(new java.awt.Dimension(814, 395));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,6 +241,9 @@ public class login extends javax.swing.JFrame {
                     if(chkRememberPassword.isSelected()){
                         JOptionPane.showMessageDialog(this,  "Tài khoản đã được lưu");
                     }
+                    TrangChu1 tc = new TrangChu1();
+                    tc.setVisible(true);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this,  "Sai tài khoản đăng nhập hoặc mật khẩu", "Failuer", JOptionPane.ERROR_MESSAGE);
                     return;
