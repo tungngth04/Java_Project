@@ -1,0 +1,2 @@
+PhieuTra{maphieutra=PT001, masach=MS001, manguoidoc=ND001, tensach=2024-05-29, thoigiantra=Sach 1, soluong=1}
+PhieuTra{maphieutra=PT002, masach=MS002, manguoidoc=ND002, tensach=2024-05-30, thoigiantra=Sach 2, soluong=7}
