@@ -4,7 +4,6 @@
  */
 package View;
 
-
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,40 +20,44 @@ public class ThongKe extends javax.swing.JFrame {
     ThongKeSach booktk;
     private static int position = 0;
     private static int check = 0;
+
     public ThongKe() {
         initComponents();
         laydulieuthongke();
     }
-    public void view(){
+
+    public void view() {
         DefaultTableModel model = (DefaultTableModel) this.bangthongke.getModel();
-        try{
+        try {
             ThongKeSach tk = new ThongKeSach();
             model.setNumRows(0);
-            for(ThongKeSach s:listbookmanager){
-                model.addRow(new Object[]{s.getMathongke(),s.getBookID(),s.getNgaythongke(),s.getSoluongton()});
+            for (ThongKeSach s : listbookmanager) {
+                model.addRow(new Object[]{s.getMathongke(), s.getBookID(), s.getNgaythongke(), s.getSoluongton()});
             }
             model.fireTableDataChanged();
             OnOffButton(false, true);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void laydulieuthongke(){
+
+    public void laydulieuthongke() {
         DefaultTableModel model = (DefaultTableModel) this.bangthongke.getModel();
-        try{
+        try {
             ThongKes tks = new ThongKes();
             listbookmanager = tks.docFileBook();
             ThongKeSach tk = new ThongKeSach();
             model.setNumRows(0);
-            for(ThongKeSach s:listbookmanager){
-                model.addRow(new Object[]{s.getMathongke(),s.getBookID(),s.getNgaythongke(),s.getSoluongton()});
+            for (ThongKeSach s : listbookmanager) {
+                model.addRow(new Object[]{s.getMathongke(), s.getBookID(), s.getNgaythongke(), s.getSoluongton()});
             }
             model.fireTableDataChanged();
             OnOffButton(false, true);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,13 +282,15 @@ public class ThongKe extends javax.swing.JFrame {
         String id = this.txtMSTK.getText();
         DefaultTableModel model = (DefaultTableModel) this.bangthongke.getModel();
         model.setNumRows(0);
-        for(ThongKeSach s:listbookmanager){
-            if(id.equals(s.getMathongke())){
+        for (ThongKeSach s : listbookmanager) {
+            if (id.equals(s.getMathongke())) {
                 tb++;
-                model.addRow(new Object[]{s.getMathongke(),s.getBookID(),s.getNgaythongke(),s.getSoluongton()});
+                model.addRow(new Object[]{s.getMathongke(), s.getBookID(), s.getNgaythongke(), s.getSoluongton()});
             }
         }
-        if(tb == 0) JOptionPane.showConfirmDialog(this, "Khong co so thong ke phu hop", "Thong bao", JOptionPane.ERROR_MESSAGE);
+        if (tb == 0) {
+            JOptionPane.showConfirmDialog(this, "Khong co so thong ke phu hop", "Thong bao", JOptionPane.ERROR_MESSAGE);
+        }
         check = 2;
     }//GEN-LAST:event_SearchBookActionPerformed
 
@@ -294,36 +299,63 @@ public class ThongKe extends javax.swing.JFrame {
         String bookid = this.txtBookID.getText();
         String date = this.txtTime.getText();
         String sl = this.txtQuanlity.getText();
-        if(check == 1){
-            try{
-                ThongKes tks = new ThongKes();
-                ThongKeSach s = new ThongKeSach(txtMSTK.getText(),txtBookID.getText(),txtTime.getText(),txtQuanlity.getText());
-                listbookmanager.add(s);
-                tks.luuFile(listbookmanager, false);
-                JOptionPane.showMessageDialog(this, "Da luu thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+        StringBuilder sb = new StringBuilder();
+        if (id.equals("")) {
+            sb.append("Không được để trống mã số thống kê!\n");
         }
-        else if(check == -1){
-            try{
-                ThongKes tks = new ThongKes();
-                ThongKeSach s = new ThongKeSach(txtMSTK.getText(),txtBookID.getText(),txtTime.getText(),txtQuanlity.getText());
-                listbookmanager.set(position, s);
-                tks.luuFile(listbookmanager, false);
-                JOptionPane.showMessageDialog(this, "Da luu thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+        if (bookid.equals("")) {
+            sb.append("Không được để trống mã sách!\n");
         }
-        else if(check == -2){
-            try{
-                ThongKes tks = new ThongKes();
-                listbookmanager.remove(position);
-                JOptionPane.showConfirmDialog(this, "Da xoa thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-                tks.luuFile(listbookmanager, false);
-            }catch(Exception e){
-                e.printStackTrace();
+        if (date.trim().equals("")) {
+            sb.append("Không được để trống ngày thống kê!\n");
+        }
+        if (sl.trim().equals("")) {
+            sb.append("Không được để trống số lượng tồn kho!\n");
+        }
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            if (check == 1) {
+                try {
+                    ThongKes tks = new ThongKes();
+                    String kt = txtMSTK.getText();
+                    int dem = 0;
+                    for (ThongKeSach t : listbookmanager) {
+                        if (kt.equals(t.getMathongke())) {
+                            dem++;
+                        }
+                    }
+                    if (dem == 0) {
+                        ThongKeSach s = new ThongKeSach(txtMSTK.getText(), txtBookID.getText(), txtTime.getText(), txtQuanlity.getText());
+                        listbookmanager.add(s);
+                        tks.luuFile(listbookmanager, false);
+                        JOptionPane.showMessageDialog(this, "Đã lưu thành công!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Đã tồn tại bản thống kê này!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (check == -1) {
+                try {
+                    ThongKes tks = new ThongKes();
+                    ThongKeSach s = new ThongKeSach(txtMSTK.getText(), txtBookID.getText(), txtTime.getText(), txtQuanlity.getText());
+                    listbookmanager.set(position, s);
+                    tks.luuFile(listbookmanager, false);
+                    JOptionPane.showMessageDialog(this, "Đã sửa thành công!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (check == -2) {
+                try {
+                    ThongKes tks = new ThongKes();
+                    listbookmanager.remove(position);
+                    JOptionPane.showConfirmDialog(this, "Đã xóa thành công!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    tks.luuFile(listbookmanager, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         this.txtMSTK.setText("");
@@ -348,12 +380,12 @@ public class ThongKe extends javax.swing.JFrame {
         this.txtTime.setText("");
         this.txtQuanlity.setText("");
         OnOffButton(false, true);
-        if(check == 2){
+        if (check == 2) {
             laydulieuthongke();
         }
     }//GEN-LAST:event_NoConfirmActionPerformed
 
-    private void OnOffButton(boolean a, boolean b){
+    private void OnOffButton(boolean a, boolean b) {
         this.Confirm.show(a);
         this.NoConfirm.show(a);
         this.AddBook.show(b);
@@ -361,7 +393,8 @@ public class ThongKe extends javax.swing.JFrame {
         this.SearchBook.show(b);
         this.UpdateBook.show(b);
     }
-    private void outsearching(boolean a, boolean b){
+
+    private void outsearching(boolean a, boolean b) {
         this.NoConfirm.show(a);
         this.Confirm.show(b);
         this.AddBook.show(b);
@@ -369,6 +402,7 @@ public class ThongKe extends javax.swing.JFrame {
         this.SearchBook.show(b);
         this.UpdateBook.show(b);
     }
+
     /**
      * @param args the command line arguments
      */

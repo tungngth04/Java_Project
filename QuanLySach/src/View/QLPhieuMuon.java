@@ -433,7 +433,7 @@ public class QLPhieuMuon extends javax.swing.JFrame {
                     c.addObject(pm);
 
                     pml.saveContainersToFile(list, "src/Data/container_data.txt");
-                    JOptionPane.showMessageDialog(this, "Phiếu mượn đã được lưu", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Sách đã được lưu", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     loadDataToTable();
 
                 } catch (Exception e) {
@@ -454,7 +454,7 @@ public class QLPhieuMuon extends javax.swing.JFrame {
                     // Lặp qua các đối tượng để tìm đối tượng cần thay thế
                     for (int i = 0; i < c.getObjects().size(); i++) {
                         Sach p = c.getObjects().get(i);
-                        if (p.getMaSach().equals(txtMS.getText())) { // Giả sử getName() trả về định danh
+                        if (p.getMaSach().equals(txtMS.getText())) { 
                             c.getObjects().set(i, pm);
                             found = true;
                             break;
@@ -462,9 +462,9 @@ public class QLPhieuMuon extends javax.swing.JFrame {
                     }
 
                     if (found) {
-                        JOptionPane.showMessageDialog(this, "Phiếu mượn đã được sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Sách đã được sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Phiếu mượn chưa được sửa", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Sách chưa được sửa", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     }
                     pml.saveContainersToFile(list, "src/Data/container_data.txt");
                     loadDataToTable();
@@ -495,7 +495,7 @@ public class QLPhieuMuon extends javax.swing.JFrame {
             List<Container> list = pml.readContainersFromFile("src/Data/container_data.txt");
             Container c = list.get(pos);
             c.getObjects().remove(pos1);
-            JOptionPane.showMessageDialog(this, "Phiếu mượn đã được xóa", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sách đã được xóa", "Thông báo", JOptionPane.ERROR_MESSAGE);
             pml.saveContainersToFile(list, "src/Data/container_data.txt");
             loadDataToTable();
 
@@ -545,7 +545,7 @@ public class QLPhieuMuon extends javax.swing.JFrame {
         String maND = txtND.getText();
         StringBuilder sb = new StringBuilder();  // cho phép tạo ra 1 chuỗi rỗng và bổ sung nội dung Username is empty or Password is empty vào sb
         if (maPM.trim().equals("")) {
-            sb.append("Mã sách không được để trống\n");
+            sb.append("Mã phiếu mượn không được để trống\n");
         }
         if (maND.trim().equals("")) {
             sb.append("Mã người đọc không được để trống\n");
@@ -558,18 +558,30 @@ public class QLPhieuMuon extends javax.swing.JFrame {
             if (check == 2) {
                 try {
                     PhieuMuonL pml = new PhieuMuonL();
-                    List<PhieuMuon> list = new ArrayList<>();
-                    PhieuMuon pm = new PhieuMuon(txtPM.getText(), txtND.getText());
-                    list.add(pm);
-                    pml.luuFile(list, true);
-                    JOptionPane.showMessageDialog(this, "Phiếu mượn đã được lưu", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                    loadDataToTable2();
-                    List<PhieuMuon> lists = pml.docFile();
-                    pml.ghided1(lists);
+                    List<PhieuMuon> list = pml.docFile();
+                    PhieuMuon pmToCheck = new PhieuMuon(maPM);
+                    boolean exists = false;
+                    for (PhieuMuon p : list) {
+                        if (p.equals(pmToCheck)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    List<PhieuMuon> pms = new ArrayList<>();
+                    if (exists) {
+                        JOptionPane.showMessageDialog(this, "Phiếu mượn đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        PhieuMuon pm = new PhieuMuon(txtPM.getText(), txtND.getText());
+                        pms.add(pm);
+                        pml.luuFile(pms, true);
+                        JOptionPane.showMessageDialog(this, "Phiếu mượn đã được lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataToTable2();
+                        List<PhieuMuon> lists = pml.docFile();
+                        pml.ghided1(lists);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.ERROR_MESSAGE);
-
                 }
             }
             if (check == -2) {
@@ -615,7 +627,6 @@ public class QLPhieuMuon extends javax.swing.JFrame {
                     loadDataToTable();
                     loadDataToTable2();
                     pml.ghided1(list);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
