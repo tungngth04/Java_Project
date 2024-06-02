@@ -1,8 +1,10 @@
 package View;
 
+import Until.PhieuTraTXT;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.List;
+import Model.PhieuTra;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,11 +16,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class QuanLyPhieuTra extends javax.swing.JFrame {
+
     /**
      * Creates new form QuanLyPhieuTra
      */
     public QuanLyPhieuTra() {
         initComponents();
+        loadDataToTable();
+        loadDataToTable1();
     }
 
     /**
@@ -33,9 +38,9 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPhieuTra = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblSach = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -80,8 +85,8 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPhieuTra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tblPhieuTra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -89,11 +94,11 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
                 "Mã Phiếu Trả", "Mã Sách"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblPhieuTra);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 290, 190));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -101,17 +106,17 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
                 "Mã Người Đọc", "Tên Sách", "Thời Gian Trả", "Số Lượng"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblSach);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(362, 90, 460, 190));
 
         jScrollPane4.setViewportView(jTextPane2);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 210, -1));
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 210, -1));
 
         jScrollPane5.setViewportView(jTextPane3);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 210, -1));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, 210, -1));
 
         jScrollPane6.setViewportView(jTextPane4);
 
@@ -119,11 +124,11 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
 
         jScrollPane7.setViewportView(jTextPane5);
 
-        jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 240, -1));
+        jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, 240, -1));
 
         jScrollPane8.setViewportView(jTextPane6);
 
-        jPanel1.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 210, -1));
+        jPanel1.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 430, 240, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add1.png"))); // NOI18N
@@ -170,7 +175,7 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jTextPane1);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, 240, -1));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 210, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Mã Sách:");
@@ -208,7 +213,43 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void loadDataToTable() {
+        DefaultTableModel tblModel = (DefaultTableModel) this.tblSach.getModel();
+        try {
+            PhieuTraTXT ptt = new PhieuTraTXT();
+            List<PhieuTra> ptts = ptt.fileread();
+            tblModel.setRowCount(0);
+            for (PhieuTra pt : ptts) {
+                tblModel.addRow(new Object[]{
+                    pt.getManguoidoc(), pt.getTensach(), pt.getThoigiantra(), pt.getSoluong()
+                });
+            }
 
+            tblModel.fireTableDataChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public void loadDataToTable1() {
+        DefaultTableModel tblModel = (DefaultTableModel) this.tblPhieuTra.getModel();
+        try {
+            PhieuTraTXT ptt = new PhieuTraTXT();
+            List<PhieuTra> ptts = ptt.filereads();
+            tblModel.setRowCount(0);
+            for (PhieuTra pt : ptts) {
+                tblModel.addRow(new Object[]{
+                    pt.getMaphieutra(), pt.getMasach()
+                });
+            }
+
+            tblModel.fireTableDataChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         TrangChu1 tc = new TrangChu1();
         tc.setVisible(true);
@@ -216,63 +257,63 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 //nut them
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                String maPhieuTra = jTextPane1.getText();
-                String maSach = jTextPane2.getText();
-                String maNguoiDoc = jTextPane3.getText();
-                String tenSach = jTextPane4.getText();
-                String thoiGianTra = jTextPane5.getText();
-                String soluong = jTextPane6.getText();
-                if (maPhieuTra.isEmpty() || maSach.isEmpty() || maNguoiDoc.isEmpty() || tenSach.isEmpty() || thoiGianTra.isEmpty() || soluong.isEmpty() ) {
-    JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.");
-    return; 
-  }
-                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();  
-                model.addRow(new Object[]{maPhieuTra, maSach});
-                DefaultTableModel mode2 = (DefaultTableModel) jTable2.getModel();  
-                mode2.addRow(new Object[]{maNguoiDoc,tenSach,thoiGianTra,soluong});
+        String maPhieuTra = jTextPane1.getText();
+        String maSach = jTextPane2.getText();
+        String maNguoiDoc = jTextPane3.getText();
+        String tenSach = jTextPane4.getText();
+        String thoiGianTra = jTextPane5.getText();
+        String soluong = jTextPane6.getText();
+        if (maPhieuTra.isEmpty() || maSach.isEmpty() || maNguoiDoc.isEmpty() || tenSach.isEmpty() || thoiGianTra.isEmpty() || soluong.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblPhieuTra.getModel();
+        model.addRow(new Object[]{maPhieuTra, maSach});
+        DefaultTableModel mode2 = (DefaultTableModel) tblSach.getModel();
+        mode2.addRow(new Object[]{maNguoiDoc, tenSach, thoiGianTra, soluong});
     }//GEN-LAST:event_jButton1ActionPerformed
 //nut sua
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int selectedRow1 = jTable1.getSelectedRow();
-    int selectedRow2 = jTable2.getSelectedRow();
-    
-    if (selectedRow1 != -1) {
-        DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
-        model1.setValueAt(jTextPane1.getText(), selectedRow1, 0);
-        model1.setValueAt(jTextPane2.getText(), selectedRow1, 1);
-    } else {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 1 để chỉnh sửa.");
-    }
-    
-    if (selectedRow2 != -1) {
-        DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
-        model2.setValueAt(jTextPane3.getText(), selectedRow2, 0);
-        model2.setValueAt(jTextPane4.getText(), selectedRow2, 1);
-        model2.setValueAt(jTextPane5.getText(), selectedRow2, 2);
-        model2.setValueAt(jTextPane6.getText(), selectedRow2, 3);
-    } else {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 2 để chỉnh sửa.");
-    }
-                
+        int selectedRow1 = tblPhieuTra.getSelectedRow();
+        int selectedRow2 = tblSach.getSelectedRow();
+
+        if (selectedRow1 != -1) {
+            DefaultTableModel model1 = (DefaultTableModel) tblPhieuTra.getModel();
+            model1.setValueAt(jTextPane1.getText(), selectedRow1, 0);
+            model1.setValueAt(jTextPane2.getText(), selectedRow1, 1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 1 để chỉnh sửa.");
+        }
+
+        if (selectedRow2 != -1) {
+            DefaultTableModel model2 = (DefaultTableModel) tblSach.getModel();
+            model2.setValueAt(jTextPane3.getText(), selectedRow2, 0);
+            model2.setValueAt(jTextPane4.getText(), selectedRow2, 1);
+            model2.setValueAt(jTextPane5.getText(), selectedRow2, 2);
+            model2.setValueAt(jTextPane6.getText(), selectedRow2, 3);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 2 để chỉnh sửa.");
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 //nut xoa
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         int selectedRow1 = jTable1.getSelectedRow();
-    int selectedRow2 = jTable2.getSelectedRow();
+        int selectedRow1 = tblPhieuTra.getSelectedRow();
+        int selectedRow2 = tblSach.getSelectedRow();
 
-    if (selectedRow1 != -1) {
-        DefaultTableModel model1 = (DefaultTableModel) jTable1.getModel();
-        model1.removeRow(selectedRow1);
-    } else {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 1 để xóa.");
-    }
+        if (selectedRow1 != -1) {
+            DefaultTableModel model1 = (DefaultTableModel) tblPhieuTra.getModel();
+            model1.removeRow(selectedRow1);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 1 để xóa.");
+        }
 
-    if (selectedRow2 != -1) {
-        DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
-        model2.removeRow(selectedRow2);
-    } else {
-        JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 2 để xóa.");
-    }
+        if (selectedRow2 != -1) {
+            DefaultTableModel model2 = (DefaultTableModel) tblSach.getModel();
+            model2.removeRow(selectedRow2);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn một hàng trong bảng 2 để xóa.");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -280,7 +321,7 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-       
+
     }//GEN-LAST:event_jButton4MouseClicked
 
     /**
@@ -340,14 +381,14 @@ public class QuanLyPhieuTra extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
     private javax.swing.JTextPane jTextPane4;
     private javax.swing.JTextPane jTextPane5;
     private javax.swing.JTextPane jTextPane6;
+    private javax.swing.JTable tblPhieuTra;
+    private javax.swing.JTable tblSach;
     // End of variables declaration//GEN-END:variables
-  
+
 }

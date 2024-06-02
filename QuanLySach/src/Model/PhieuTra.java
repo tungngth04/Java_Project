@@ -21,6 +21,17 @@ public class PhieuTra {
     public PhieuTra() {
     }
 
+    public PhieuTra(String maphieutra, String masach) {
+        this.maphieutra = maphieutra;
+        this.masach = masach;
+    }
+
+    public PhieuTra(String manguoidoc, String tensach, String thoigiantra, String soluong) {
+        this.manguoidoc = manguoidoc;
+        this.tensach = tensach;
+        this.thoigiantra = thoigiantra;
+        this.soluong = soluong;
+    }  
     public PhieuTra(String maphieutra, String masach, String manguoidoc, String thoigiantra, String tensach, String soluong) {
         this.maphieutra = maphieutra;
         this.masach = masach;

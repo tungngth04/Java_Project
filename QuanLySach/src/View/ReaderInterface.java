@@ -11,45 +11,49 @@ import javax.swing.table.TableModel;
 import Until.NguoiDoc;
 
 public class ReaderInterface extends javax.swing.JFrame {
+
     ArrayList<ReaderManaging> listreader = new ArrayList();
     ReaderManaging reader;
     private static int position = 0;
     private static int check = 0;
-    
+
     public ReaderInterface() {
         initComponents();
         loadDatatoTable();
     }
-    public void viewinglistreader(){
+
+    public void viewinglistreader() {
         DefaultTableModel model = (DefaultTableModel) this.ReaderTable.getModel();
-        try{
+        try {
             ReaderManaging rm = new ReaderManaging();
             model.setNumRows(0);
-            for(ReaderManaging r:listreader){
-                model.addRow(new Object[]{r.getReaderID(),r.getReaderName(),r.getReaderAddress(),r.getReaderPhone(),r.getReaderEmail()});
+            for (ReaderManaging r : listreader) {
+                model.addRow(new Object[]{r.getReaderID(), r.getReaderName(), r.getReaderAddress(), r.getReaderPhone(), r.getReaderEmail()});
             }
             model.fireTableDataChanged();
             OnOffButton(false, true);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void loadDatatoTable(){
+
+    public void loadDatatoTable() {
         DefaultTableModel model = (DefaultTableModel) this.ReaderTable.getModel();
-        try{
+        try {
             NguoiDoc nd = new NguoiDoc();
             listreader = nd.docFile();
             ReaderManaging rm = new ReaderManaging();
             model.setNumRows(0);
-            for(ReaderManaging r:listreader){
-                model.addRow(new Object[]{r.getReaderID(),r.getReaderName(),r.getReaderAddress(),r.getReaderPhone(),r.getReaderEmail()});
+            for (ReaderManaging r : listreader) {
+                model.addRow(new Object[]{r.getReaderID(), r.getReaderName(), r.getReaderAddress(), r.getReaderPhone(), r.getReaderEmail()});
             }
             model.fireTableDataChanged();
             OnOffButton(false, true);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -271,13 +275,15 @@ public class ReaderInterface extends javax.swing.JFrame {
         String id = this.txtReaderID.getText();
         DefaultTableModel model = (DefaultTableModel) this.ReaderTable.getModel();
         model.setNumRows(0);
-        for(ReaderManaging r:listreader){
-            if(id.equals(r.getReaderID())){
+        for (ReaderManaging r : listreader) {
+            if (id.equals(r.getReaderID())) {
                 tb++;
-                model.addRow(new Object[]{r.getReaderID(),r.getReaderName(),r.getReaderAddress(),r.getReaderPhone(),r.getReaderEmail()});
+                model.addRow(new Object[]{r.getReaderID(), r.getReaderName(), r.getReaderAddress(), r.getReaderPhone(), r.getReaderEmail()});
             }
         }
-        if(tb == 0) JOptionPane.showConfirmDialog(this, "Khong co khach hang phu hop", "Thong bao", JOptionPane.ERROR_MESSAGE);
+        if (tb == 0) {
+            JOptionPane.showConfirmDialog(this, "Không có khách hàng nào phù hợp", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
         check = 2;
     }//GEN-LAST:event_SearchReaderInfoActionPerformed
 
@@ -286,56 +292,65 @@ public class ReaderInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameReaderActionPerformed
 
     private void SaveReaderInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveReaderInfoActionPerformed
-        String id = this.txtReaderID.getText();
-        String name = this.txtNameReader.getText();
-        String address = this.txtReaderAddress.getText();
-        String phone = this.txtReaderPhone.getText();
-        String email = this.txtReaderEmail.getText();
+        String id = txtReaderID.getText();
+        String name = txtNameReader.getText();
+        String address = txtReaderAddress.getText();
+        String phone = txtReaderPhone.getText();
+        String email = txtReaderEmail.getText();
         StringBuilder sb = new StringBuilder();
-        if(id.equals("")){
-            sb.append("Khong duoc de trong\n");
+        if (id.equals("")) {
+            sb.append("Không được để trống mã người đọc\n");
         }
-        if(name.equals("")){
-            sb.append("Khong duoc de trong\n");
+        if (name.equals("")) {
+            sb.append("Không được để trống tên người đọc!\n");
         }
-        if(address.trim().equals("")){
-            sb.append("Khong duoc de trong\n");
+        if (phone.trim().equals("")) {
+            sb.append("Không được để trống số điện thoại!\n");
         }
-        if(phone.trim().equals("")){
-            sb.append("Khong duoc de trong\n");
-        }
-        if(email.trim().equals("")){
-            sb.append("Khong duoc de trong\n");
-        }
-        if(check == 1){
-            try{
-                NguoiDoc nd = new NguoiDoc();
-                ReaderManaging rm = new ReaderManaging(txtReaderID.getText(),txtNameReader.getText(), txtReaderAddress.getText(), txtReaderPhone.getText(), txtReaderEmail.getText());
-                listreader.add(rm);
-                nd.luuFile(listreader, false);
-                JOptionPane.showMessageDialog(this, "Da luu thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else if(check == -1){
-            try{
-                NguoiDoc nd = new NguoiDoc();
-                ReaderManaging rm = new ReaderManaging(txtReaderID.getText(),txtNameReader.getText(), txtReaderAddress.getText(), txtReaderPhone.getText(), txtReaderEmail.getText());
-                listreader.set(position, rm);
-                JOptionPane.showConfirmDialog(this, "Da sua thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-                nd.luuFile(listreader, false);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-//            listreader.set(position, new ReaderManaging(id,name,address,phone,email));
-        }else if(check == -2){
-            try{
-                NguoiDoc nd = new NguoiDoc();
-                listreader.remove(position);
-                JOptionPane.showConfirmDialog(this, "Da xoa thanh cong", "Trang thai", JOptionPane.ERROR_MESSAGE);
-                nd.luuFile(listreader, false);
-            }catch(Exception e){
-                e.printStackTrace();
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Invaidation", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            if (check == 1) {
+                try {
+                    NguoiDoc nd = new NguoiDoc();
+                    String test = txtReaderID.getText();
+                    int kt = 0;
+                    for (ReaderManaging r : listreader) {
+                        if (test.equals(r.getReaderID())) {
+                            kt += 1;
+                        }
+                    }
+                    if (kt == 0) {
+                        ReaderManaging rm = new ReaderManaging(txtReaderID.getText(), txtNameReader.getText(), txtReaderAddress.getText(), txtReaderPhone.getText(), txtReaderEmail.getText());
+                        listreader.add(rm);
+                        nd.luuFile(listreader, false);
+                        JOptionPane.showMessageDialog(this, "Đã lưu thành công", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Đã tồn tại người đọc", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (check == -1) {
+                try {
+                    NguoiDoc nd = new NguoiDoc();
+                    ReaderManaging rm = new ReaderManaging(txtReaderID.getText(), txtNameReader.getText(), txtReaderAddress.getText(), txtReaderPhone.getText(), txtReaderEmail.getText());
+                    listreader.set(position, rm);
+                    JOptionPane.showConfirmDialog(this, "Đã sửa thành công!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    nd.luuFile(listreader, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (check == -2) {
+                try {
+                    NguoiDoc nd = new NguoiDoc();
+                    listreader.remove(position);
+                    JOptionPane.showConfirmDialog(this, "Đã xóa thành công!", "Trạng thái", JOptionPane.ERROR_MESSAGE);
+                    nd.luuFile(listreader, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         this.txtReaderID.setText("");
@@ -353,7 +368,7 @@ public class ReaderInterface extends javax.swing.JFrame {
         this.txtReaderAddress.setText("");
         this.txtReaderEmail.setText("");
         OnOffButton(false, true);
-        if(check == 2){
+        if (check == 2) {
             loadDatatoTable();
         }
     }//GEN-LAST:event_NoChangingReaderInfoActionPerformed
@@ -367,7 +382,7 @@ public class ReaderInterface extends javax.swing.JFrame {
         this.txtReaderPhone.setText(reader.getReaderPhone());
         this.txtReaderEmail.setText(reader.getReaderEmail());
     }//GEN-LAST:event_ReaderTableMouseClicked
-    private void OnOffButton(boolean a, boolean b){
+    private void OnOffButton(boolean a, boolean b) {
         this.SaveReaderInfo.show(a);
         this.NoChangingReaderInfo.show(a);
         this.AddReaderInfo.show(b);
@@ -375,7 +390,8 @@ public class ReaderInterface extends javax.swing.JFrame {
         this.ChangeReaderInfo.show(b);
         this.SearchReaderInfo.show(b);
     }
-    private void outsearching(boolean a, boolean b){
+
+    private void outsearching(boolean a, boolean b) {
         this.NoChangingReaderInfo.show(a);
         this.SaveReaderInfo.show(b);
         this.AddReaderInfo.show(b);
@@ -383,6 +399,7 @@ public class ReaderInterface extends javax.swing.JFrame {
         this.ChangeReaderInfo.show(b);
         this.SearchReaderInfo.show(b);
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

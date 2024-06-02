@@ -354,8 +354,6 @@ public class bookManager extends javax.swing.JFrame {
         String tenSach = txtTS.getText();
         String slText = txtSL.getText();
         StringBuilder sb = new StringBuilder();
-
-
         if (maSach.trim().isEmpty()) {
             sb.append("Mã sách không được để trống\n");
         }
@@ -381,8 +379,6 @@ public class bookManager extends javax.swing.JFrame {
                 sb.append("Số lượng phải là một số hợp lệ\n");
             }
         }
-
-
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -390,12 +386,23 @@ public class bookManager extends javax.swing.JFrame {
         Sach1 newBook = new Sach1(maSach, tenSach, TL, NXB, SL);
         File1 f1 = new File1();
         List<Sach1> list = f1.docFile();
+
         if (check == 1) {
-         
-            list.add(newBook);
-            JOptionPane.showMessageDialog(this, "Thông tin sách vừa nhập đã được lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            boolean exists = false;
+            for (Sach1 book : list) {
+                if (book.getMaSach().equals(maSach)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists) {
+                JOptionPane.showMessageDialog(this, "Sách với mã " + maSach + " đã tồn tại", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                list.add(newBook);
+                JOptionPane.showMessageDialog(this, "Thông tin sách vừa nhập đã được lưu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else if (check == -1) {
-            // Cập nhật
             boolean found = false;
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getMaSach().equals(maSach)) {
@@ -477,10 +484,10 @@ public class bookManager extends javax.swing.JFrame {
     }//GEN-LAST:event_SearchMouseClicked
 
     public static void main(String args[]) {
-    
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrangChu1().setVisible(true);
+                 
                 new bookManager().setVisible(true);
             }
         });

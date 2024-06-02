@@ -31,13 +31,29 @@ public class PhieuTraTXT {
             while ((line = br.readLine()) != null) {
                 String[] txt = line.split(",");
                 // Assuming the order of attributes in toString method is same as in the constructor
-                PhieuTra pt = new PhieuTra(txt[0], txt[1], txt[2], txt[3], txt[4],txt[5]);
+                PhieuTra pt = new PhieuTra(txt[2], txt[3], txt[4],txt[5]);
                 list.add(pt);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+    public List<PhieuTra> filereads() {
+        List<PhieuTra> lists = new ArrayList<>();
+        try (FileReader fr = new FileReader("src/Data/phieutra.txt");
+             BufferedReader br = new BufferedReader(fr)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] txt = line.split(",");
+                // Assuming the order of attributes in toString method is same as in the constructor
+                PhieuTra pt = new PhieuTra(txt[0], txt[1]);
+                lists.add(pt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lists;
     }
     public static void main(String[] args) {
         List<PhieuTra> phieuTraList = new ArrayList<>();

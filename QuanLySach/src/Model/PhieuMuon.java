@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class PhieuMuon {
     private String maPM;
-    private String maND;
+    private String maND;        
     public PhieuMuon(){
         
     }
@@ -40,7 +40,6 @@ public class PhieuMuon {
     @Override
     public String toString() {
         return  maPM+","+ maND;
-        //+ "," + maSach +","+ tenSach +","+ tgMuon + "," + soLuong
     }
     @Override
     public boolean equals(Object obj) {

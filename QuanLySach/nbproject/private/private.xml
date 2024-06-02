@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/login.java</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Model/PhieuTra.java</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Data/Login.txt</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/ThongKe.java</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Data/PhieuMuon.txt</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Until/PhieuTraTXT.java</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/bookManager.java</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/TrangChu1.java</file>
             <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Data/container_data.txt</file>
-            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/ReaderInterface.java</file>
             <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/QuanLyPhieuTra.java</file>
+            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/View/QLPhieuMuon.java</file>
+            <file>file:/E:/BTL_JAVA_1/QuanLySach/src/Until/PhieuMuonL.java</file>
         </group>
     </open-files>
 </project-private>
